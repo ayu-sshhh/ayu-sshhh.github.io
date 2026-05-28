@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayush Yadav | FPGA & DSP Engineer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg: #070b14;
+      --card: rgba(10, 16, 30, 0.85);
+      --primary: #00f7ff;
+      --secondary: #ff00c8;
+      --text: #d6faff;
+      --muted: #7ba8b0;
+      --border: rgba(0, 247, 255, 0.2);
+    }
+
+    body {
+      background: radial-gradient(circle at top, #111827 0%, #050816 50%, #02030a 100%);
+      color: var(--text);
+      font-family: 'Fira Code', monospace;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -2;
+    }
+
+    .glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(0,247,255,0.08);
+      filter: blur(100px);
+      z-index: -1;
+      animation: float 10s ease-in-out infinite alternate;
+    }
+
+    .glow2 {
+      top: 50%;
+      right: -100px;
+      background: rgba(255,0,200,0.08);
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(-20px);
+      }
+      to {
+        transform: translateY(30px);
+      }
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 6rem 2rem;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .terminal {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,247,255,0.15);
+      animation: fadeIn 1.2s ease;
+    }
+
+    .terminal-top {
+      background: rgba(255,255,255,0.05);
+      padding: 0.8rem;
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff5f56; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #27c93f; }
+
+    .terminal-body {
+      padding: 2rem;
+      text-align: left;
+      line-height: 2;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      color: var(--primary);
+      text-shadow: 0 0 20px var(--primary);
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .cmd {
+      color: var(--primary);
+    }
+
+    .highlight {
+      color: var(--secondary);
+    }
+
+    .btn-group {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.9rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: white;
+      transition: 0.3s ease;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 20px rgba(0,247,255,0.3);
+      border-color: var(--primary);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 0 25px rgba(0,247,255,0.2);
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .skill {
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      transition: 0.3s;
+    }
+
+    .skill:hover {
+      box-shadow: 0 0 15px rgba(255,0,200,0.25);
+      transform: translateY(-3px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    .socials {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: 0.3s;
+    }
+
+    .socials a:hover {
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(0,247,255,0.2);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .terminal-body {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow"></div>
+  <div class="glow glow2"></div>
+
+  <nav>
+    <div class="nav-container">
+      <div class="logo">AYUSH.EXE</div>
+
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="terminal">
+      <div class="terminal-top">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+      </div>
+
+      <div class="terminal-body">
+        <p><span class="cmd">$</span> booting portfolio.exe</p>
+        <h1>AYUSH YADAV</h1>
+
+        <p>
+          FPGA Developer • DSP Enthusiast • RISC-V Builder
+        </p>
+
+        <p>
+          Building high-performance hardware systems using
+          <span class="highlight">Verilog</span>,
+          <span class="highlight">FPGA</span>,
+          <span class="highlight">DSP</span>, and
+          <span class="highlight">Embedded Systems</span>
+        </p>
+
+        <div class="btn-group">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="resume.pdf" target="_blank">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="fade">
+    <h2 class="section-title">About Me</h2>
+
+    <div class="card">
+      <p>
+        I'm an electronics and computer engineering student passionate about
+        FPGA systems, digital design, signal processing, and computer architecture.
+        I love building hardware projects from scratch — from RISC-V processors to
+        DSP accelerators and real-time embedded systems.
+      </p>
+
+      <br>
+
+      <p>
+        Currently exploring:
+      </p>
+
+      <br>
+
+      <ul>
+        <li>⚡ FPGA-based DSP systems</li>
+        <li>⚡ Real-time signal processing</li>
+        <li>⚡ Hardware acceleration</li>
+        <li>⚡ Embedded AI systems</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="fade">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>FalconRVx8</h3>
+        <p>
+          Custom RISC-V processor implemented on FPGA with pipelined architecture,
+          peripherals, and SoC integration.
+        </p>
+
+        <br>
+
+        <a class="btn" href="https://github.com/yourusername/falconrvx8" target="_blank">
+          GitHub Repo
+        </a>
+      </div>
+
+      <div class="card">
+        <h3>FPGA Audio DSP System</h3>
+        <p>
+          Real-time FPGA-based digital audio equalizer using Verilog and DSP filters.
+        </p>
+
+        <br>
+
+        <a class="btn" href="https://github.com/yourusername/audio-dsp" target="_blank">
+          GitHub Repo
+        </a>
+      </div>
+
+      <div class="card">
+        <h3>EMG Gesture Recognition</h3>
+        <p>
+          EMG signal acquisition and gesture recognition system integrating hardware
+          filtering and machine learning.
+        </p>
+
+        <br>
+
+        <a class="btn" href="https://github.com/yourusername/emg-project" target="_blank">
+          GitHub Repo
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills" class="fade">
+    <h2 class="section-title">Technical Skills</h2>
+
+    <div class="skills">
+      <div class="skill">Verilog</div>
+      <div class="skill">SystemVerilog</div>
+      <div class="skill">Vivado</div>
+      <div class="skill">FPGA</div>
+      <div class="skill">RISC-V</div>
+      <div class="skill">Digital Design</div>
+      <div class="skill">DSP</div>
+      <div class="skill">Embedded Systems</div>
+      <div class="skill">Python</div>
+      <div class="skill">C++</div>
+      <div class="skill">Git</div>
+      <div class="skill">Linux</div>
+    </div>
+  </section>
+
+  <section id="resume" class="fade">
+    <h2 class="section-title">Resume</h2>
+
+    <div class="card">
+      <p>
+        Click below to download my latest resume.
+      </p>
+
+      <br>
+
+      <a class="btn" href="resume.pdf" target="_blank">
+        Download Resume
+      </a>
+    </div>
+  </section>
+
+  <section id="contact" class="fade">
+    <h2 class="section-title">Connect</h2>
+
+    <div class="socials">
+      <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+      <a href="https://twitter.com/yourhandle" target="_blank">Twitter/X</a>
+      <a href="mailto:yourmail@gmail.com">Email</a>
+      <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Ayush Yadav • Built with HTML/CSS • Hosted on GitHub Pages</p>
+  </footer>
+
+  <script>
+    const fades = document.querySelectorAll('.fade');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    fades.forEach(fade => observer.observe(fade));
+  </script>
+
+</body>
+</html>
